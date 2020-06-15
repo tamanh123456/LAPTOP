@@ -14,5 +14,6 @@ namespace LAPTOP.Models
         public string Brand { get; set; }
 
         
+
     }
 }

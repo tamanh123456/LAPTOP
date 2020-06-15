@@ -6,7 +6,7 @@
 
 <h2>Create</h2>
 
-@using (Html.BeginForm("Create", "Laptops"))
+@using (Html.BeginForm("Create", "Laptops",FormMethod.Post, new {   @enctype="multipart/form-data   "}))
 {
     <div class="form-group">
         @Html.LabelFor(m => m.Id)
@@ -29,9 +29,9 @@
         @Html.ValidationMessageFor(m => m.Price)
     </div>
     <div class="form-group">
-        @Html.LabelFor(m => m.Image_laptop)
-       <input type="file" name="Image_laptop" />
-        @Html.ValidationMessageFor(m => m.Image_laptop)
+        @Html.LabelFor(m => m.Image_laptop, new { @class = "control-label cod-md-2" })
+        <input type="file" name="Image_laptop" />
+        @ViewBag.ThongBao
     </div>
     <div class="form-group">
         @Html.LabelFor(m => m.CategoryId)

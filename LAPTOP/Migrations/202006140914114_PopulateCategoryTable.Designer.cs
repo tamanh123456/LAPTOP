@@ -13,7 +13,7 @@ namespace LAPTOP.Migrations
         
         string IMigrationMetadata.Id
         {
-            get { return "202006120908197_PopulateCategoryTable"; }
+            get { return "202006140914114_PopulateCategoryTable"; }
         }
         
         string IMigrationMetadata.Source

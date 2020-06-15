@@ -22,9 +22,9 @@ namespace LAPTOP.Migrations
                     {
                         Id = c.String(nullable: false, maxLength: 128),
                         AdminId = c.String(maxLength: 128),
-                        CPU = c.String(nullable: false),
-                        Ram = c.String(nullable: false),
-                        Image_laptop = c.String(nullable: false),
+                        CPU = c.String(),
+                        Ram = c.String(),
+                        Image_laptop = c.String(),
                         Price = c.Single(nullable: false),
                         CategoryId = c.Byte(nullable: false),
                     })

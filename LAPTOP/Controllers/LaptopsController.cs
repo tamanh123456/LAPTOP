@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-
+using System.IO;
 namespace LAPTOP.Controllers
 {
     
@@ -34,7 +34,7 @@ namespace LAPTOP.Controllers
         }
         [Authorize]
         [HttpPost]
-        public ActionResult Create(Laptop viewModel)
+        public ActionResult Create(Laptop viewModel, HttpPostedFileBase fileUpload)
         {
             if(ModelState.IsValid)
             {
@@ -51,13 +51,45 @@ namespace LAPTOP.Controllers
                 Image_laptop=viewModel.Image_laptop,
                 CPU=viewModel.CPU
             };
-            
+            //upload hinh anh
+            var fileName = Path.GetFileName(fileUpload.FileName);
+            var path = Path.Combine(Server.MapPath("~/Image_laptop"), fileName);
+            if (System.IO.File.Exists(path))
+            {
+                ViewBag.ThongBao = "Hinh anh da ton tai";
+            }
+            else
+            {
+                fileUpload.SaveAs(path);
+            }
+
             _dbContext.Laptops.Add(laptop);
             _dbContext.SaveChanges();
             return RedirectToAction("Index", "Home");
         }
-        public ActionResult Edit()//chua add view
+        
+        /*public ActionResult UploadImage(Laptop laptop, HttpPostedFileBase fileUpload)
         {
+            var fileName = Path.GetFileName(fileUpload.FileName);
+            var path = Path.Combine(Server.MapPath("~/Image_laptop"), fileName);
+            if(System.IO.File.Exists(path))
+            {
+                ViewBag.ThongBao = "Hinh anh da ton tai";
+            }
+            else
+            {
+                fileUpload.SaveAs(path);
+            }
+            return View();
+        }*/
+        public ActionResult Edit()
+        { 
+
+            return View();
+        }
+        public ActionResult Delete() //chua addview
+        {
+
             return View();
         }
     }

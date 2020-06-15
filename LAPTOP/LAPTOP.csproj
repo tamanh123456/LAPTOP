@@ -174,13 +174,13 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202006120907056_InitialModel.cs" />
-    <Compile Include="Migrations\202006120907056_InitialModel.Designer.cs">
-      <DependentUpon>202006120907056_InitialModel.cs</DependentUpon>
+    <Compile Include="Migrations\202006140912080_InitialModel.cs" />
+    <Compile Include="Migrations\202006140912080_InitialModel.Designer.cs">
+      <DependentUpon>202006140912080_InitialModel.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202006120908197_PopulateCategoryTable.cs" />
-    <Compile Include="Migrations\202006120908197_PopulateCategoryTable.Designer.cs">
-      <DependentUpon>202006120908197_PopulateCategoryTable.cs</DependentUpon>
+    <Compile Include="Migrations\202006140914114_PopulateCategoryTable.cs" />
+    <Compile Include="Migrations\202006140914114_PopulateCategoryTable.Designer.cs">
+      <DependentUpon>202006140914114_PopulateCategoryTable.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -249,6 +249,7 @@
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Laptops\Create.cshtml" />
+    <Content Include="Views\Laptops\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -268,11 +269,11 @@
     <Content Include="Scripts\jquery-3.4.1.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\202006120907056_InitialModel.resx">
-      <DependentUpon>202006120907056_InitialModel.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202006140912080_InitialModel.resx">
+      <DependentUpon>202006140912080_InitialModel.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202006120908197_PopulateCategoryTable.resx">
-      <DependentUpon>202006120908197_PopulateCategoryTable.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202006140914114_PopulateCategoryTable.resx">
+      <DependentUpon>202006140914114_PopulateCategoryTable.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

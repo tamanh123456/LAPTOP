@@ -13,7 +13,7 @@ namespace LAPTOP.Migrations
         
         string IMigrationMetadata.Id
         {
-            get { return "202006120907056_InitialModel"; }
+            get { return "202006140912080_InitialModel"; }
         }
         
         string IMigrationMetadata.Source

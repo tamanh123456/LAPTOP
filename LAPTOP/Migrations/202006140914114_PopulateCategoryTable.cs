@@ -12,6 +12,7 @@ namespace LAPTOP.Migrations
             Sql("INSERT INTO CATEGORIES (ID, BRAND) VALUES (3, 'ASUS')");
             Sql("INSERT INTO CATEGORIES (ID, BRAND) VALUES (4, 'DELL')");
             Sql("INSERT INTO CATEGORIES (ID, BRAND) VALUES (5, 'HP')");
+            Sql("INSERT INTO CATEGORIES (ID, BRAND) VALUES (6, 'LENOVO')");
         }
         
         public override void Down()
