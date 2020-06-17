@@ -17,16 +17,8 @@ namespace LAPTOP.Controllers
             }
         public ActionResult Index()
         {
-            var upcominglaptops = _dbContext.Laptops
-                .Include(c => c.Id)
-                .Include(c => c.CPU)
-                .Include(c => c.Ram)
-                .Include(c => c.Price)
-                .Include(c => c.Category)
-                .Include(c => c.Image_laptop);
-
-
-            return View(upcominglaptops);
+            var laptops = _dbContext.Laptops.ToList();
+            return View(laptops);
         }
 
         public ActionResult About()

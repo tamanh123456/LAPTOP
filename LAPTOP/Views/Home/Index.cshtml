@@ -3,5 +3,14 @@
     ViewBag.Title = "Home Page";
 }
 
-
+    <div class="row">
+        <ul>
+            @foreach (var laptop in Model)
+            {
+                <li>
+                    @laptop.Id - @laptop.CPU - @laptop.Ram - @laptop.Price - <img src="~/Content/Image_laptop/@laptop.Image_laptop" width="100" />
+                </li>
+            }
+        </ul>
+    </div>
 

@@ -6,6 +6,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.IO;
+
 namespace LAPTOP.Controllers
 {
     
@@ -20,6 +21,7 @@ namespace LAPTOP.Controllers
         }
 
         public object CategoryId { get; private set; }
+        
 
         // GET: Laptops
         [Authorize]
@@ -34,9 +36,9 @@ namespace LAPTOP.Controllers
         }
         [Authorize]
         [HttpPost]
-        public ActionResult Create(Laptop viewModel, HttpPostedFileBase fileUpload)
+        public ActionResult Create(Laptop viewModel, HttpPostedFileBase hinhanh)
         {
-            if(ModelState.IsValid)
+            if(!ModelState.IsValid)
             {
                 viewModel.Categories = _dbContext.Categories.ToList();
                 return View("Create", viewModel);
@@ -48,49 +50,87 @@ namespace LAPTOP.Controllers
                 CategoryId = viewModel.CategoryId,
                 Ram = viewModel.Ram,
                 Price = viewModel.Price,
-                Image_laptop=viewModel.Image_laptop,
+                //Image_laptop=viewModel.Image_laptop,
                 CPU=viewModel.CPU
             };
             //upload hinh anh
-            var fileName = Path.GetFileName(fileUpload.FileName);
-            var path = Path.Combine(Server.MapPath("~/Image_laptop"), fileName);
-            if (System.IO.File.Exists(path))
+            if(hinhanh != null && hinhanh.ContentLength>0)
             {
-                ViewBag.ThongBao = "Hinh anh da ton tai";
+                var fileName = Path.GetFileName(hinhanh.FileName);
+                laptop.Image_laptop = fileName;
+                var path = Path.Combine(Server.MapPath("~/Content/Image_laptop"), fileName);
+                if (System.IO.File.Exists(path))
+                {
+                    ViewBag.ThongBao = "Hinh anh da ton tai";
+                }
+                else
+                {
+                    hinhanh.SaveAs(path);
+                }
             }
-            else
-            {
-                fileUpload.SaveAs(path);
-            }
-
             _dbContext.Laptops.Add(laptop);
             _dbContext.SaveChanges();
             return RedirectToAction("Index", "Home");
         }
         
-        /*public ActionResult UploadImage(Laptop laptop, HttpPostedFileBase fileUpload)
-        {
-            var fileName = Path.GetFileName(fileUpload.FileName);
-            var path = Path.Combine(Server.MapPath("~/Image_laptop"), fileName);
-            if(System.IO.File.Exists(path))
-            {
-                ViewBag.ThongBao = "Hinh anh da ton tai";
-            }
-            else
-            {
-                fileUpload.SaveAs(path);
-            }
-            return View();
-        }*/
-        public ActionResult Edit()
-        { 
+        
+        [Authorize]
+        [HttpGet]
 
-            return View();
-        }
-        public ActionResult Delete() //chua addview
+        public ActionResult Edit(string Id)
         {
+            var laptop = _dbContext.Laptops.SingleOrDefault(c => c.Id == Id && c.AdminId == AdminId);
+            var userId = User.Identity.GetUserId();
+            
+            var viewModel = new Laptop
+            {
+                Categories = _dbContext.Categories.ToList(),
+                Category= laptop.Category,
+                Id=laptop.Id,
+                Ram=laptop.Ram,
+                Price=laptop.Price,
+                Image_laptop=laptop.Image_laptop
+                
+            };
 
-            return View();
+            
+            return View("Edit", viewModel);
         }
+        [Authorize]
+        [HttpPost]
+        [ValidateInput(false)]
+        public ActionResult Edit(Laptop  viewModel,HttpPostedFileBase hinhanh)
+        {
+            if(!ModelState.IsValid)
+            {
+                viewModel.Categories = _dbContext.Categories.ToList();
+                return View("Edit", viewModel);
+            }
+            var userId = User.Identity.GetUserId();
+            var laptop = _dbContext.Laptops.Single(c => c.Id == viewModel.Id && c.AdminId == userId);
+            laptop.Id = viewModel.Id;
+            laptop.CPU = viewModel.CPU;
+            laptop.Ram = viewModel.Ram;
+            laptop.Price = viewModel.Price;
+            if (hinhanh != null && hinhanh.ContentLength > 0)
+            {
+                var fileName = Path.GetFileName(hinhanh.FileName);
+                laptop.Image_laptop = fileName;
+                var path = Path.Combine(Server.MapPath("~/Content/Image_laptop"), fileName);
+                if (System.IO.File.Exists(path))
+                {
+                    ViewBag.ThongBao = "Hinh anh da ton tai";
+                }
+                else
+                {
+                    hinhanh.SaveAs(path);
+                }
+            }
+            UpdateModel(viewModel);
+            _dbContext.SaveChanges();   
+            return RedirectToAction("Index","Home");
+        }
+        
+        
     }
 }
