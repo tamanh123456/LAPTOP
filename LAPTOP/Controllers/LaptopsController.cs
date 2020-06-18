@@ -6,6 +6,8 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.IO;
+using System.Drawing.Printing;
+using System.Net;
 
 namespace LAPTOP.Controllers
 {
@@ -79,21 +81,22 @@ namespace LAPTOP.Controllers
 
         public ActionResult Edit(string Id)
         {
+            
             var laptop = _dbContext.Laptops.SingleOrDefault(c => c.Id == Id && c.AdminId == AdminId);
             var userId = User.Identity.GetUserId();
-            
+           
             var viewModel = new Laptop
             {
                 Categories = _dbContext.Categories.ToList(),
-                Category= laptop.Category,
-                Id=laptop.Id,
-                Ram=laptop.Ram,
-                Price=laptop.Price,
-                Image_laptop=laptop.Image_laptop
-                
+                Category = laptop.Category,
+                Id = laptop.Id,
+                Ram = laptop.Ram,
+                Price = laptop.Price,
+                Image_laptop = laptop.Image_laptop
+
             };
 
-            
+
             return View("Edit", viewModel);
         }
         [Authorize]
@@ -106,6 +109,7 @@ namespace LAPTOP.Controllers
                 viewModel.Categories = _dbContext.Categories.ToList();
                 return View("Edit", viewModel);
             }
+
             var userId = User.Identity.GetUserId();
             var laptop = _dbContext.Laptops.Single(c => c.Id == viewModel.Id && c.AdminId == userId);
             laptop.Id = viewModel.Id;
@@ -130,7 +134,34 @@ namespace LAPTOP.Controllers
             _dbContext.SaveChanges();   
             return RedirectToAction("Index","Home");
         }
-        
+        [Authorize]
+        public ActionResult Delete(string Id)
+        {
+            Laptop laptop= _dbContext.Laptops.Find(Id);
+            if(laptop==null)
+            {
+                return View("Not found");
+            }
+            else
+            {
+                return View("Delete",laptop);
+            }
+            
+            
+        }
+        [Authorize]
+        [HttpPost, ActionName("Delete")]
+        public ActionResult DeleteConfirm(string Id)
+        {
+            Laptop laptop = _dbContext.Laptops.Find(Id);
+            if(laptop==null)
+            {
+                return View("Not found");
+            }
+            _dbContext.Laptops.Remove(laptop);
+            _dbContext.SaveChanges();
+            return RedirectToAction("Index", "Home");
+        }
         
     }
 }
